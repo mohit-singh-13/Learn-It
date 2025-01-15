@@ -8,9 +8,10 @@ import {
   RadioGroup,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { saveResult } from "../redux/slices";
 
 const Quiz = () => {
   const [result, setResult] = useState<string[]>([]);
@@ -18,6 +19,7 @@ const Quiz = () => {
   const [ans, setAns] = useState<string>("");
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const { words } = useSelector((state: { root: StateType }) => state.root);
 
@@ -26,6 +28,12 @@ const Quiz = () => {
     setCount((prev) => prev + 1);
     setAns("");
   };
+
+  useEffect(() => {
+    if (count + 1 > words.length) navigate("/result");
+
+    dispatch(saveResult(result));
+  }, [result]);
 
   return (
     <Container
@@ -49,7 +57,8 @@ const Quiz = () => {
             <FormControlLabel
               value={word}
               control={<Radio />}
-              label="Option 1"
+              label={word}
+              key={word}
             />
           ))}
         </RadioGroup>

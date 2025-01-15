@@ -1,6 +1,10 @@
+import { CircularProgress, Container } from "@mui/material"
+
 const Loader = () => {
   return (
-    <div>Loader</div>
+    <Container maxWidth={"sm"} sx={{marginTop: "18%", marginLeft: "45%"}}>
+      <CircularProgress />
+    </Container>
   )
 }
 

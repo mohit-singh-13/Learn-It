@@ -18,7 +18,7 @@ const Learning = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { loading, result, error, words } = useSelector(
+  const { loading, error, words } = useSelector(
     (state: { root: StateType }) => state.root
   );
 
@@ -31,7 +31,6 @@ const Learning = () => {
 
     translateWords(params)
       .then((arr: WordType[]) => {
-        // console.log("Worked");
         console.log("arr", arr);
         dispatch(getWordsSuccess(arr));
       })
@@ -40,13 +39,13 @@ const Learning = () => {
         dispatch(getWordsFailed(err));
       });
 
-      if (error) {
-        alert(error);
-        dispatch(clearState());
-      }
-  }, [dispatch, params, error]);
+    if (error) {
+      console.log(error);
+      dispatch(clearState());
+    }
+  }, [params, dispatch, error]);
 
-  if (loading) return <Loader />
+  if (loading) return <Loader />;
 
   return (
     <Container maxWidth="sm" sx={{ padding: "1rem" }}>
